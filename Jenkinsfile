@@ -36,17 +36,21 @@ pipeline {
             steps {
                 sh '''
                     docker rm -f onespace-ci-test 2>/dev/null || true
-                    docker run -d --name onespace-ci-test -p                    backend:${BUILD_NUMBER}
+                    docker run -d --name onespace-ci-test -p                  e-backend:${BUILD_NUMBER}
 
                     sleep 3
 
                     curl --fail http://127.0.0.1:5001/api/health
 
-                    docker                    est
+                    docker rm -f onespace-ci-test
                 '''
-                                     st {
+            }
+        }
+    }
+
+    post {
         always {
-            sh 'docker rm            sh 'docker rdev/null || true'
+            sh 'docker rm -f onespace-ci-test 2>/dev/null || true'
         }
     }
 }
